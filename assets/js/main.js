@@ -5,7 +5,7 @@ form.addEventListener("submit", async (e) => {
 
   const data = Object.fromEntries(new FormData(form));
 
-  const res = await fetch("http://localhost:5000/api/contact", {
+  const res = await fetch("/api/send", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -14,12 +14,14 @@ form.addEventListener("submit", async (e) => {
   const result = await res.json();
 
   if (result.success) {
-    alert("Заявка отправлена!");
+    alert("✅ Заявка отправлена!");
     form.reset();
   } else {
-    alert("Ошибка отправки");
+    alert("❌ Ошибка отправки");
+    console.error(result);
   }
 });
+
 document.addEventListener("DOMContentLoaded", () => {
     const headerCta = document.querySelector(".btn-order");
   

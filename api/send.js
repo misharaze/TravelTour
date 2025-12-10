@@ -1,37 +1,33 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).end();
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false });
+  }
 
   const { name, phone, email, destination, message } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
-  });
-
   try {
-    await transporter.sendMail({
-      from: "Заявка с сайта <info@chudatour.com>",
-      to: process.env.EMAIL,
-      subject: "НОВАЯ ЗАЯВКА",
+    await resend.emails.send({
+      from: "ЧудаТур <onboarding@resend.dev>",
+      to: process.env.TO_EMAIL,
+      subject: "Новая заявка с сайта ЧудаТур",
       html: `
         <h2>Новая заявка</h2>
-        <b>Имя:</b> ${name}<br>
-        <b>Телефон:</b> ${phone}<br>
-        <b>Email:</b> ${email}<br>
-        <b>Направление:</b> ${destination}<br>
-        <b>Сообщение:</b> ${message}
+        <p><b>Имя:</b> ${name}</p>
+        <p><b>Телефон:</b> ${phone}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Направление:</b> ${destination}</p>
+        <p><b>Сообщение:</b> ${message}</p>
       `
     });
 
-    res.status(200).json({ success: true });
+    return res.status(200).json({ success: true });
 
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false });
+  } catch (error) {
+    console.error("EMAIL ERROR:", error);
+    return res.status(500).json({ success: false, error });
   }
 }
