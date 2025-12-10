@@ -1,0 +1,126 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  background: linear-gradient(
+    180deg,
+    rgba(11, 28, 38, 0.95) 0%,
+    rgba(11, 28, 38, 0.85) 100%
+  );
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  transition: $transition;
+
+  .navbar {
+    padding: 14px 0;
+  }
+
+
+  .logo {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: $white;
+    text-decoration: none;
+
+    span {
+      color: $accent;
+      text-shadow: 0 0 12px rgba(255, 107, 0, 0.6);
+    }
+  }
+
+
+  .nav-link {
+    color: $text-main !important;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 28px;
+    position: relative;
+    transition: $transition;
+
+    &:hover {
+      color: $white !important;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -7px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, $accent, $accent-hover);
+      transition: $transition;
+      border-radius: 5px;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  /* ===== КНОПКА ===== */
+  .btn-order {
+    margin-left: 30px;
+    background: linear-gradient(135deg, $accent, $accent-hover);
+    color: $white;
+    padding: 9px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(255, 107, 0, 0.35);
+    transition: $transition;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(255, 107, 0, 0.5);
+      color: $white;
+    }
+  }
+
+  /* ===== БУРГЕР ===== */
+  .navbar-toggler {
+    border: none;
+    box-shadow: none;
+  }
+
+  .navbar-toggler-icon {
+    filter: brightness(1.4);
+  }
+}
+
+/* ✅ МОБИЛКА */
+@media (max-width: 991px) {
+  .header {
+    .nav-link {
+      margin: 14px 0;
+      font-size: 16px;
+    }
+
+    .btn-order {
+      margin: 18px 0 5px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 22px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
